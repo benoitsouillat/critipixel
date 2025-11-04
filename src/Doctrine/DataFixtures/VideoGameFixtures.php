@@ -2,6 +2,8 @@
 
 namespace App\Doctrine\DataFixtures;
 
+use App\Model\Entity\Review;
+use App\Model\Entity\Tag;
 use App\Model\Entity\User;
 use App\Model\Entity\VideoGame;
 use App\Rating\CalculateAverageRating;
@@ -37,13 +39,31 @@ final class VideoGameFixtures extends Fixture implements DependentFixtureInterfa
             ->setImageSize(2_098_872)
         );
 
+        $reviews = array_fill_callback(0, 20, function (int $index) use ($videoGames, $users) : Review {
+            $randomVideoGame = $videoGames[array_rand($videoGames)];
+            $randomUser = $users[array_rand($users)];
+            $review = (new Review)
+                ->setVideoGame($randomVideoGame)
+                ->setRating($index % 5 + 1)
+                ->setUser($randomUser)
+                ->setComment($this->faker->paragraphs(6, true));
+
+            return $review;
+        });
         // TODO : Ajouter les tags aux vidéos
+        $tagsName = ['Aventure', 'Action', 'Horreur', 'Plateforme', 'Famille'];
+        foreach ($tagsName as $tagName) {
+            $tag = (new Tag)->setName($tagName);
+            $manager->persist($tag);
+/*            array_walk($videoGames, function (VideoGame $videoGame) use ($tag) {
+                    $videoGame->add($tag);
+            });*/
+        }
 
         array_walk($videoGames, [$manager, 'persist']);
+        array_walk($reviews, [$manager, 'persist']);
 
         $manager->flush();
-
-        // TODO : Ajouter des reviews aux vidéos
 
     }
 
