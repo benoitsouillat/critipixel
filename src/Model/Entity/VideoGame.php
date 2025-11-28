@@ -223,6 +223,18 @@ class VideoGame
         return $this->tags;
     }
 
+    public function addTag(Tag $tag): VideoGame
+    {
+        $this->tags->add($tag);
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): VideoGame
+    {
+        $this->tags->removeElement($tag);
+        return $this;
+    }
+
     /**
      * @return Collection<Review>
      */

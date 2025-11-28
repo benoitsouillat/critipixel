@@ -50,18 +50,25 @@ final class VideoGameFixtures extends Fixture implements DependentFixtureInterfa
 
             return $review;
         });
-        // TODO : Ajouter les tags aux vidéos
+
         $tagsName = ['Aventure', 'Action', 'Horreur', 'Plateforme', 'Famille'];
-        foreach ($tagsName as $tagName) {
-            $tag = (new Tag)->setName($tagName);
-            $manager->persist($tag);
-/*            array_walk($videoGames, function (VideoGame $videoGame) use ($tag) {
-                    $videoGame->add($tag);
-            });*/
+        $tags = array_fill_callback(0, 5, function () use (&$tagsName): Tag {
+            $name = array_pop($tagsName);
+            return (new Tag())->setName($name);
+        });
+
+        foreach ($videoGames as $videoGame) {
+            for ($i = 0; $i < rand(2, 4); $i++) {
+                $randomTag = $tags[array_rand($tags)];
+                $videoGame->addTag($randomTag);
+            }
+            $this->calculateAverageRating->calculateAverage($videoGame);
+            $this->countRatingsPerValue->countRatingsPerValue($videoGame);
         }
 
         array_walk($videoGames, [$manager, 'persist']);
         array_walk($reviews, [$manager, 'persist']);
+        array_walk($tags, [$manager, 'persist']);
 
         $manager->flush();
 
