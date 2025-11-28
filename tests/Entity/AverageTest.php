@@ -18,32 +18,59 @@ class AverageTest extends TestCase
         $this->videoGame = new VideoGame();
     }
 
-    public function testAverageFour(): void
+    private function collectionOfReviews(array $ratings): ArrayCollection
     {
-        $reviews = (new ArrayCollection([
-            (new Review())->setRating(5),
-            (new Review())->setRating(4),
-            (new Review())->setRating(3),
-            (new Review())->setRating(4),
-        ]));
+        $reviews = new ArrayCollection();
+        foreach ($ratings as $rating) {
+            $reviews->add((new Review())->setRating((int) $rating));
+        }
+        return $reviews;
+    }
+
+    private function ReviewProvider(): \Generator
+    {
+        yield 'Reviews with average 5' => [
+            'reviews' => $this->collectionOfReviews([5, 5]),
+            'resultExpect' => 5,
+        ];
+        yield 'Review with average 4' => [
+            'reviews' => $this->collectionOfReviews([5, 3, 4]),
+            'resultExpect' => 4,
+        ];
+        yield 'Review with average 3' => [
+            'reviews' => $this->collectionOfReviews([5, 3, 1]),
+            'resultExpect' => 3,
+        ];
+        yield 'Review with average 2' => [
+            'reviews' => $this->collectionOfReviews([2]),
+            'resultExpect' => 2,
+        ];
+        yield 'Review with average 1' => [
+            'reviews' => $this->collectionOfReviews([1, 1, 1]),
+            'resultExpect' => 1,
+        ];
+    }
+
+    /**
+     * @param ArrayCollection<Review> $reviews
+     * @param int $resultExpect
+     * @dataProvider ReviewProvider
+     */
+    public function testAverage(ArrayCollection $reviews, int $resultExpect): void
+    {
         foreach ($reviews as $review) {
             $this->videoGame->getReviews()->add($review);
         }
-
         (new RatingHandler())->calculateAverage($this->videoGame);
 
-        $this->assertEquals(4, $this->videoGame->getAverageRating());
+        $this->assertEquals($resultExpect, $this->videoGame->getAverageRating());
     }
 
     public function testAverageNull(): void
     {
-        $videoGame = $this->createMock(VideoGame::class);
-        $videoGame->method('getReviews')->willReturn(new ArrayCollection([]));
+        $this->videoGame->getReviews()->clear();
+        (new RatingHandler())->calculateAverage($this->videoGame);
 
-        (new RatingHandler())->calculateAverage($videoGame);
-
-        $videoGame->expects($this->once())->method('getAverageRating')->willReturn(null);
-
-        $this->assertNull($videoGame->getAverageRating());
+        $this->assertNull($this->videoGame->getAverageRating());
     }
 }
