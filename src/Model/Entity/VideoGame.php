@@ -59,10 +59,10 @@ class VideoGame
     private string $description;
 
     #[Column(type: Types::DATE_IMMUTABLE)]
-    private DateTimeInterface $releaseDate;
+    private ?DateTimeInterface $releaseDate = null;
 
     #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private DateTimeImmutable $updatedAt;
+    private ?DateTimeImmutable $updatedAt = null;
 
     #[Column(type: Types::TEXT, nullable: true)]
     private ?string $test = null;

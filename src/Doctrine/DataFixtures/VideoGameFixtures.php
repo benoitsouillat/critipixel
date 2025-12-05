@@ -29,46 +29,47 @@ final class VideoGameFixtures extends Fixture implements DependentFixtureInterfa
     {
         $users = $manager->getRepository(User::class)->findAll();
 
-        $videoGames = array_fill_callback(0, 50, fn (int $index): VideoGame => (new VideoGame)
-            ->setTitle(sprintf('Jeu vidéo %d', $index))
-            ->setDescription($this->faker->paragraphs(10, true))
-            ->setReleaseDate(new DateTimeImmutable())
-            ->setTest($this->faker->paragraphs(6, true))
-            ->setRating(($index % 5) + 1)
-            ->setImageName(sprintf('video_game_%d.png', $index))
-            ->setImageSize(2_098_872)
-        );
+        $tags = [];
+        $tagNames = ['Aventure', 'Action', 'Horreur', 'Plateforme', 'Famille'];
+        foreach ($tagNames as $tagName) {
+            $tag = (new Tag())->setName($tagName);
+            $tags[] = $tag;
+        }
 
-        $reviews = array_fill_callback(0, 20, function (int $index) use ($videoGames, $users) : Review {
-            $randomVideoGame = $videoGames[array_rand($videoGames)];
-            $randomUser = $users[array_rand($users)];
-            $review = (new Review)
-                ->setVideoGame($randomVideoGame)
-                ->setRating($index % 5 + 1)
-                ->setUser($randomUser)
-                ->setComment($this->faker->paragraphs(6, true));
+        $videoGames = [];
+        for ($i = 0; $i < 50; $i++) {
+            $videoGame = (new VideoGame)
+                ->setTitle(sprintf('Jeu vidéo %d', $i))
+                ->setDescription($this->faker->paragraphs(10, true))
+                ->setReleaseDate(new DateTimeImmutable())
+                ->setTest($this->faker->paragraphs(6, true))
+                ->setRating(($i % 5) + 1)
+                ->setImageName(sprintf('video_game_%d.png', $i))
+                ->setImageSize(2_098_872);
 
-            return $review;
-        });
-
-        $tagsName = ['Aventure', 'Action', 'Horreur', 'Plateforme', 'Famille'];
-        $tags = array_fill_callback(0, 5, function () use (&$tagsName): Tag {
-            $name = array_pop($tagsName);
-            return (new Tag())->setName($name);
-        });
-
-        foreach ($videoGames as $videoGame) {
-            for ($i = 0; $i < rand(2, 4); $i++) {
+            for ($j = 0; $j < rand(2,4); $j++) {
                 $randomTag = $tags[array_rand($tags)];
                 $videoGame->addTag($randomTag);
             }
+
+            $manager->persist($videoGame);
+            $videoGames[] = $videoGame;
+        }
+
+        for ($i = 0; $i < 20; $i++) {
+            $review = (new Review)
+                ->setVideoGame($videoGames[array_rand($videoGames)])
+                ->setUser($users[array_rand($users)])
+                ->setRating(($i % 5) + 1)
+                ->setComment($this->faker->paragraphs(6, true));
+
+            $manager->persist($review);
+        }
+
+        foreach ($videoGames as $videoGame) {
             $this->calculateAverageRating->calculateAverage($videoGame);
             $this->countRatingsPerValue->countRatingsPerValue($videoGame);
         }
-
-        array_walk($videoGames, [$manager, 'persist']);
-        array_walk($reviews, [$manager, 'persist']);
-        array_walk($tags, [$manager, 'persist']);
 
         $manager->flush();
 

@@ -18,16 +18,20 @@ class AverageTest extends TestCase
         $this->videoGame = new VideoGame();
     }
 
+    /**
+     * @param array<int> $ratings
+     * @return ArrayCollection<int, Review>
+     */
     private function collectionOfReviews(array $ratings): ArrayCollection
     {
         $reviews = new ArrayCollection();
         foreach ($ratings as $rating) {
-            $reviews->add((new Review())->setRating((int) $rating));
+            $reviews->add((new Review())->setRating($rating));
         }
         return $reviews;
     }
 
-    private function ReviewProvider(): \Generator
+    public function ReviewProvider(): \Generator
     {
         yield 'Reviews with average 5' => [
             'reviews' => $this->collectionOfReviews([5, 5]),
@@ -52,7 +56,7 @@ class AverageTest extends TestCase
     }
 
     /**
-     * @param ArrayCollection<Review> $reviews
+     * @param ArrayCollection<int, Review> $reviews
      * @param int $resultExpect
      * @dataProvider ReviewProvider
      */

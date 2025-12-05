@@ -33,6 +33,9 @@ final class Filter
         return $this->tags;
     }
 
+    /**
+     * @param Tag[] $tags
+     */
     public function setTags(array $tags): Filter
     {
         $this->tags = $tags;
