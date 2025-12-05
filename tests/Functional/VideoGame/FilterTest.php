@@ -68,7 +68,7 @@ final class FilterTest extends FunctionalTestCase
             $cardText = $node->text();
 
             foreach ($tagNames as $expectedTag) {
-                $this->assertStringContainsString(
+                self::assertStringContainsString(
                     $expectedTag,
                     $cardText,
                     sprintf('Le jeu affiché ne contient pas le tag "%s" alors qu\'il le devrait.', $expectedTag)

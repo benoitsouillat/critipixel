@@ -67,7 +67,7 @@ class AverageTest extends TestCase
         }
         (new RatingHandler())->calculateAverage($this->videoGame);
 
-        $this->assertEquals($resultExpect, $this->videoGame->getAverageRating());
+        self::assertEquals($resultExpect, $this->videoGame->getAverageRating());
     }
 
     public function testAverageNull(): void
@@ -75,6 +75,6 @@ class AverageTest extends TestCase
         $this->videoGame->getReviews()->clear();
         (new RatingHandler())->calculateAverage($this->videoGame);
 
-        $this->assertNull($this->videoGame->getAverageRating());
+        self::assertNull($this->videoGame->getAverageRating());
     }
 }

@@ -39,20 +39,20 @@ class ReviewControllerTest extends WebTestCase
     public function testVideoGameListIsUp(): void
     {
         $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('video_games_list'));
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        self::assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     public function testPostReview(): void
     {
         $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('video_games_show', ['slug' => 'jeu-video-3']));
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Poster')->form();
         $form['review[rating]'] = '4';
         $form['review[comment]'] = 'Great game!';
         $this->client->submit($form);
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        self::assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
 }
