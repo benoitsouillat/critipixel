@@ -33,6 +33,7 @@ final class VideoGameFixtures extends Fixture implements DependentFixtureInterfa
         $tagNames = ['Aventure', 'Action', 'Horreur', 'Plateforme', 'Famille'];
         foreach ($tagNames as $tagName) {
             $tag = (new Tag())->setName($tagName);
+            $manager->persist($tag);
             $tags[] = $tag;
         }
 

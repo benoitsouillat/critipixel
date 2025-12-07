@@ -1058,34 +1058,31 @@
         },
         {
             "name": "doctrine/persistence",
-            "version": "3.4.3",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "d59e6ef7caffe6a30f4b6f9e9079a75f52c64ae0"
+                "reference": "b9c49ad3558bb77ef973f4e173f2e9c2eca9be09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/d59e6ef7caffe6a30f4b6f9e9079a75f52c64ae0",
-                "reference": "d59e6ef7caffe6a30f4b6f9e9079a75f52c64ae0",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/b9c49ad3558bb77ef973f4e173f2e9c2eca9be09",
+                "reference": "b9c49ad3558bb77ef973f4e173f2e9c2eca9be09",
                 "shasum": ""
             },
             "require": {
                 "doctrine/event-manager": "^1 || ^2",
-                "php": "^7.2 || ^8.0",
+                "php": "^8.1",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0"
             },
-            "conflict": {
-                "doctrine/common": "<2.10"
-            },
             "require-dev": {
-                "doctrine/coding-standard": "^12 || ^14",
-                "doctrine/common": "^3.0",
-                "phpstan/phpstan": "^1 || 2.1.30",
-                "phpstan/phpstan-phpunit": "^1 || ^2",
-                "phpstan/phpstan-strict-rules": "^1 || ^2",
-                "phpunit/phpunit": "^8.5.38 || ^9.5",
-                "symfony/cache": "^4.4 || ^5.4 || ^6.0 || ^7.0"
+                "doctrine/coding-standard": "^14",
+                "phpstan/phpstan": "2.1.30",
+                "phpstan/phpstan-phpunit": "^2",
+                "phpstan/phpstan-strict-rules": "^2",
+                "phpunit/phpunit": "^10.5.58 || ^12",
+                "symfony/cache": "^4.4 || ^5.4 || ^6.0 || ^7.0",
+                "symfony/finder": "^4.4 || ^5.4 || ^6.0 || ^7.0"
             },
             "type": "library",
             "autoload": {
@@ -1134,7 +1131,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/3.4.3"
+                "source": "https://github.com/doctrine/persistence/tree/4.1.1"
             },
             "funding": [
                 {
@@ -1150,7 +1147,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-21T15:21:39+00:00"
+            "time": "2025-10-16T20:13:18+00:00"
         },
         {
             "name": "doctrine/sql-formatter",
@@ -7510,23 +7507,23 @@
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
-            "version": "3.7.2",
+            "version": "3.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "0afaecd65e5791e855edddf125b77576e7bcbbfb"
+                "reference": "4c3dfcc819ba2725a574f4286aa3f6459f582d5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/0afaecd65e5791e855edddf125b77576e7bcbbfb",
-                "reference": "0afaecd65e5791e855edddf125b77576e7bcbbfb",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/4c3dfcc819ba2725a574f4286aa3f6459f582d5b",
+                "reference": "4c3dfcc819ba2725a574f4286aa3f6459f582d5b",
                 "shasum": ""
             },
             "require": {
                 "doctrine/data-fixtures": "^1.5 || ^2.0",
                 "doctrine/doctrine-bundle": "^2.2",
                 "doctrine/orm": "^2.14.0 || ^3.0",
-                "doctrine/persistence": "^2.4 || ^3.0",
+                "doctrine/persistence": "^2.4 || ^3.0 || ^4",
                 "php": "^7.4 || ^8.0",
                 "psr/log": "^1 || ^2 || ^3",
                 "symfony/config": "^5.4 || ^6.0 || ^7.0",
@@ -7541,9 +7538,9 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "14.0.0",
-                "phpstan/phpstan": "2.1.11",
+                "phpstan/phpstan": "2.1.32",
                 "phpunit/phpunit": "^9.6.13 || 11.4.14",
-                "symfony/phpunit-bridge": "7.2.0"
+                "symfony/phpunit-bridge": "7.3.4"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -7577,7 +7574,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineFixturesBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineFixturesBundle/tree/3.7.2"
+                "source": "https://github.com/doctrine/DoctrineFixturesBundle/tree/3.7.3"
             },
             "funding": [
                 {
@@ -7593,7 +7590,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-11T16:14:44+00:00"
+            "time": "2025-12-03T15:47:21+00:00"
         },
         {
             "name": "fakerphp/faker",
@@ -8114,11 +8111,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.32",
+            "version": "2.1.33",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e126cad1e30a99b137b8ed75a85a676450ebb227",
-                "reference": "e126cad1e30a99b137b8ed75a85a676450ebb227",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9e800e6bee7d5bd02784d4c6069b48032d16224f",
+                "reference": "9e800e6bee7d5bd02784d4c6069b48032d16224f",
                 "shasum": ""
             },
             "require": {
@@ -8163,7 +8160,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-11T15:18:17+00:00"
+            "time": "2025-12-05T10:24:31+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -8287,16 +8284,16 @@
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "2.0.8",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "2fe9fbeceaf76dd1ebaa7bbbb25e2fb5e59db2fe"
+                "reference": "cda423c709dae0126987fec04a381ec819c9d9a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/2fe9fbeceaf76dd1ebaa7bbbb25e2fb5e59db2fe",
-                "reference": "2fe9fbeceaf76dd1ebaa7bbbb25e2fb5e59db2fe",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/cda423c709dae0126987fec04a381ec819c9d9a7",
+                "reference": "cda423c709dae0126987fec04a381ec819c9d9a7",
                 "shasum": ""
             },
             "require": {
@@ -8334,9 +8331,9 @@
             "description": "PHPUnit extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-phpunit/issues",
-                "source": "https://github.com/phpstan/phpstan-phpunit/tree/2.0.8"
+                "source": "https://github.com/phpstan/phpstan-phpunit/tree/2.0.9"
             },
-            "time": "2025-11-11T07:55:22+00:00"
+            "time": "2025-12-05T08:04:44+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
