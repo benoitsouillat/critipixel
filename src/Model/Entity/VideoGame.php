@@ -58,7 +58,7 @@ class VideoGame
     #[Column(type: Types::TEXT)]
     private string $description;
 
-    #[Column(type: Types::DATE_IMMUTABLE)]
+    #[Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $releaseDate = null;
 
     #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]

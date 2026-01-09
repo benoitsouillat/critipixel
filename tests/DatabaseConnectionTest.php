@@ -15,7 +15,7 @@ class DatabaseConnectionTest extends WebTestCase
 
         $result = $connection->executeQuery('SELECT 1')->fetchOne();
 
-        $this->assertEquals(1, $result, "La base de données n'a pas répondu correctement.");
+        self::assertEquals(1, $result, "La base de données n'a pas répondu correctement.");
     }
 
 }
