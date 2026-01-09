@@ -54,4 +54,7 @@ jobs:
           DATABASE_URL: postgresql://critipixel:password@127.0.0.1:5432/critipixel?serverVersion=16&charset=utf8
           APP_ENV: test
           DEFAULT_LOCALE: fr
-        run: vendor/bin/phpunit
+        run:
+            php bin/console sass:build --env=test
+            php bin/console cache:clear --env=test
+            vendor/bin/phpunit
