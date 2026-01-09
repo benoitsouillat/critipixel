@@ -50,5 +50,10 @@ jobs:
 
       - name: Run Tests
         env:
+          DB_HOST: "127.0.0.1"
+          DB_PORT: "5432"
+          DB_USER: "critipixel"
+          DB_PASSWORD: "password"
+          DB_NAME: "critipixel_test"
           DATABASE_URL: postgresql://critipixel:password@127.0.0.1:5432/critipixel_test?serverVersion=16&charset=utf8
         run: vendor/bin/phpunit
