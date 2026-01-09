@@ -55,6 +55,8 @@ jobs:
           APP_ENV: test
           DEFAULT_LOCALE: fr
         run: |
-          php bin/console sass:build --env=test
-          php bin/console cache:clear --env=test
+          php bin/console importmap:install
+          php bin/console sass:build
+          php bin/console asset-map:compile
+          php bin/console cache:clear
           vendor/bin/phpunit
