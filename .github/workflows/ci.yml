@@ -1,0 +1,63 @@
+name: critipixel CI/CD
+
+on:
+    push:
+        branches: [main, test-cicd]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+            POSTGRES_USER: critipixel
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: critipixel_test
+        ports:
+            - 5432:5432
+        options: >-
+            --health-cmd pg-isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+          
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql
+          coverage: none
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Dependencies
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress
+
+      - name: Prepare Database
+        env:
+          DATABASE_URL: postgresql://postgres:password@127.0.0.1:5432/criti_pixel_test?serverVersion=16&charset=utf8
+        run: |
+          php bin/console doctrine:database:create --env=test --if-not-exists
+          php bin/console doctrine:migrations:migrate --env=test --no-interaction
+          # Si tu as des fixtures pour tes tests fonctionnels :
+          # php bin/console doctrine:fixtures:load --env=test --no-interaction
+
+      - name: Run Tests
+        env:
+          DATABASE_URL: postgresql://postgres:password@127.0.0.1:5432/criti_pixel_test?serverVersion=16&charset=utf8
+        run: vendor/bin/phpunit
