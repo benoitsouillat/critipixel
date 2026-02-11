@@ -53,6 +53,10 @@ class AverageTest extends TestCase
             'reviews' => $this->collectionOfReviews([1, 1, 1]),
             'resultExpect' => 1,
         ];
+        yield 'Review is Null' => [
+            'reviews' => $this->collectionOfReviews([0]),
+            'resultExpect' => null,
+        ];
     }
 
     /**
@@ -60,7 +64,7 @@ class AverageTest extends TestCase
      * @param int $resultExpect
      * @dataProvider ReviewProvider
      */
-    public function testAverage(ArrayCollection $reviews, int $resultExpect): void
+    public function testAverage(ArrayCollection $reviews, ?int $resultExpect = null): void
     {
         foreach ($reviews as $review) {
             $this->videoGame->getReviews()->add($review);

@@ -76,4 +76,15 @@ final class FilterTest extends FunctionalTestCase
             }
         });
     }
+
+    // If no filter is applied, all video games should be displayed
+    public function testShouldDisplayAllVideoGames(): void
+    {
+        $this->get('/');
+        self::assertResponseIsSuccessful();
+        self::assertSelectorCount(10, 'article.game-card');
+        $this->client->submitForm('Filtrer', ['filter[search]' => ''], 'GET');
+        self::assertResponseIsSuccessful();
+        self::assertSelectorCount(10, 'article.game-card');
+    }
 }
